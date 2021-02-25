@@ -48,17 +48,24 @@ namespace Kent.Entitas
     /*
     @brief 無組件符合比對器
     */
-    public interface INoneMatcher<T> : IComponentMatcher<T> where T : IEntity
-    {
-        // TODO
-    }
+    public interface INoneMatcher<T> : IComponentMatcher<T> where T : IEntity { }
 
     /*
     @brief 任一組件符合比對器
     */
     public interface IAnyMatcher<T> : INoneMatcher<T> where T : IEntity
     {
-        // TODO
+        /*
+        @brief 取無符合
+        @note 用來取複合條件的交集
+        */
+        IComponentMatcher<T> NoneOf(params int[] complexIds);
+
+        /*
+        @brief 取無符合
+        @note 用來取複合條件的交集
+        */
+        IComponentMatcher<T> NoneOf(params IMatcher<T>[] matchers);
     }
 
     /*
@@ -66,6 +73,16 @@ namespace Kent.Entitas
     */
     public interface IAllMatcher<T> : IAnyMatcher<T> where T : IEntity
     {
-        // TODO
+        /*
+        @brief 取任一符合
+        @note 用來取複合條件的交集
+        */
+        INoneMatcher<T> AnyOf(params int[] complexIds);
+
+        /*
+        @brief 取任一符合
+        @note 用來取複合條件的交集
+        */
+        INoneMatcher<T> AnyOf(params IMatcher<T>[] matchers);
     }
 }
