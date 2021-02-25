@@ -93,7 +93,7 @@ namespace Kent.Entitas
         @brief 清除所有開關
         @param isOpen [in] 會將所有開關都設定成此狀態
         */
-        public void Clear(bool isOpen = true)
+        public void Clear(bool isOpen = false)
         {
             depend[int.MaxValue] = isOpen;
         }

@@ -90,7 +90,7 @@ namespace Kent.Entitas
         */
         public void AddRef(object owner)
         {
-            if (owners.Add(owner))
+            if (owners.Add(owner) == false)
                 throw new Exception($"obj: {owner} already ref obj: {host}");
         }
 
@@ -100,7 +100,7 @@ namespace Kent.Entitas
         */
         public void RemoveRef(object owner)
         {
-            if (owners.Remove(owner))
+            if (owners.Remove(owner) == false)
                 throw new Exception($"obj: {owner} doesn't ref obj: {host}");
         }
     }

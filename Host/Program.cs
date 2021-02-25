@@ -1,4 +1,5 @@
 ﻿using System;
+using Kent.Entitas;
 
 namespace Host
 {
@@ -12,7 +13,15 @@ namespace Host
         */
         static void Main(string[] args)
         {
-            // TODO
+            var mgr = new DemoMgr();
+            DemoSystem.Inst.SetMgr(mgr);
+            SystemsSet.Inst.AddSystem(DemoSystem.Inst);
+
+            SystemsSet.Inst.Init();
+
+            //SystemsSet.Inst.Update();
+
+            SystemsSet.Inst.Free();
         }
     }
 }

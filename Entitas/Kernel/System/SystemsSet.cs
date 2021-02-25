@@ -8,7 +8,7 @@ namespace Kent.Entitas
     @brief 系統集合
     @note 使用者要自行尋找合適的地方接上所有函式
     */
-    public class SystemsSet : ISetMgrSystem, IInitSystem, IUpdateSystem, IFreeSystem, IReloadSystem
+    public class SystemsSet : IInitSystem, IUpdateSystem, IFreeSystem, IReloadSystem
     {
         /*
         @brief 實例
@@ -29,11 +29,6 @@ namespace Kent.Entitas
         */
         public void AddSystem(ISystem system)
         {
-            var setMgrSystem = system as ISetMgrSystem;
-
-            if (setMgrSystem != null)
-                setMgrSystems.Add(setMgrSystem);
-
             var initSystem = system as IInitSystem;
 
             if (initSystem != null)
@@ -53,15 +48,6 @@ namespace Kent.Entitas
 
             if (reloadSystem != null)
                 reloadSystems.Add(reloadSystem);
-        }
-
-        /*
-        @brief 設定管理器
-        */
-        public void SetMgr(IManager mgr)
-        {
-            foreach (var system in setMgrSystems)
-                system.SetMgr(mgr);
         }
 
         /*

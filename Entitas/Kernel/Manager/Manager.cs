@@ -306,7 +306,7 @@ namespace Kent.Entitas
                     // 此配對器有關注此組件
                     if ((matcher.MixComplexId & temp) > 0)
                     {
-                        if (componentIdToGroups[i] != null)
+                        if (componentIdToGroups[i] == null)
                             componentIdToGroups[i] = new List<IGroup<T>>();
 
                         componentIdToGroups[i].Add(group);
