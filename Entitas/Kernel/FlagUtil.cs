@@ -9,7 +9,7 @@ namespace Kent.Entitas
     @brief 旗標工具
     @note 只可容納32個開關(0~31)
     */
-    public class FlagsUtil
+    public class FlagUtil
     {
         /*
         @brief 
@@ -25,12 +25,12 @@ namespace Kent.Entitas
         /*
         @brief 
         */
-        private BitVector32 tool;
+        private BitVector32 depend;
 
         /*
         @brief 
         */
-        public int Id { get { return tool.Data; } }
+        public int Id { get { return depend.Data; } }
 
         /*
         @brief 
@@ -39,19 +39,19 @@ namespace Kent.Entitas
         {
             get
             {
-                return MaxSize > idx ? tool[masks[idx]] : false;
+                return MaxSize > idx ? depend[masks[idx]] : false;
             }
             set
             {
                 if (MaxSize > idx)
-                    tool[masks[idx]] = value;
+                    depend[masks[idx]] = value;
             }
         }
 
         /*
         @brief 
         */
-        static FlagsUtil()
+        static FlagUtil()
         {
             int temp = 0;
 
@@ -66,27 +66,27 @@ namespace Kent.Entitas
         @brief 
         @note 會複製開關狀態
         */
-        public FlagsUtil(FlagsUtil src)
+        public FlagUtil(FlagUtil src)
         {
-            tool = new BitVector32(src.tool);
+            depend = new BitVector32(src.depend);
         }
 
         /*
         @brief 
         @note 會複製開關狀態
         */
-        public FlagsUtil(BitVector32 src)
+        public FlagUtil(BitVector32 src)
         {
-            tool = new BitVector32(src);
+            depend = new BitVector32(src);
         }
 
         /*
         @brief 
         @param value [in] 用二進位轉十進位方式設定初始開關狀態
         */
-        public FlagsUtil(int value = 0)
+        public FlagUtil(int value = 0)
         {
-            tool = new BitVector32(value);
+            depend = new BitVector32(value);
         }
 
         /*
@@ -95,7 +95,7 @@ namespace Kent.Entitas
         */
         public void Clear(bool isOpen = true)
         {
-            tool[int.MaxValue] = isOpen;
+            depend[int.MaxValue] = isOpen;
         }
 
         /*
@@ -105,7 +105,7 @@ namespace Kent.Entitas
         */
         public bool Get(int value)
         {
-            return tool[value];
+            return depend[value];
         }
 
         /*
@@ -114,7 +114,7 @@ namespace Kent.Entitas
         */
         public void Set(int value, bool isOpen)
         {
-            tool[value] = isOpen;
+            depend[value] = isOpen;
         }
 
         /*

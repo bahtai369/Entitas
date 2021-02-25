@@ -38,7 +38,7 @@ namespace Kent.Entitas
         public int EntitiesCount { get { return entities.Count; } }
 
         /*
-        @brief 輸出字串快取
+        @brief 字串輸出快取
         */
         private string toStrCache;
 

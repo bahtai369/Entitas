@@ -6,13 +6,15 @@ namespace Kent.Entitas
 {
     /*
     @brief 實體變化
+    @param id [in] 組件編號
     */
-    public delegate void EntityChange(IEntity entity, int componentId, IComponent Component);
+    public delegate void EntityChange(IEntity entity, int id, IComponent Component);
 
     /*
     @brief 實體更新
+    @param id [in] 組件編號
     */
-    public delegate void EntityUpdate(IEntity entity, int componentId, IComponent oldComponent, IComponent newComponent);
+    public delegate void EntityUpdate(IEntity entity, int id, IComponent oldComponent, IComponent newComponent);
 
     /*
     @brief 實體事件
@@ -84,13 +86,15 @@ namespace Kent.Entitas
 
         /*
         @brief 新增組件
+        @param id [in] 組件編號
         */
-        void AddComponent(int componentId, IComponent component);
+        void AddComponent(int id, IComponent component);
 
         /*
         @brief 移除組件
+        @param id [in] 組件編號
         */
-        void RemoveComponent(int componentId);
+        void RemoveComponent(int id);
 
         /*
         @brief 移除所有組件
@@ -99,13 +103,15 @@ namespace Kent.Entitas
 
         /*
         @brief 更新組件
+        @param id [in] 組件編號
         */
-        void UpdateComponent(int componentId, IComponent component);
+        void UpdateComponent(int id, IComponent component);
 
         /*
         @brief 取得組件
+        @param id [in] 組件編號
         */
-        IComponent GetComponent(int componentId);
+        IComponent GetComponent(int id);
 
         /*
         @brief 取得所有組件
@@ -114,8 +120,9 @@ namespace Kent.Entitas
 
         /*
         @brief 有無此組件
+        @param id [in] 組件編號
         */
-        bool HasComponent(int componentId);
+        bool HasComponent(int id);
 
         /*
         @brief 有無所有組件
@@ -131,12 +138,14 @@ namespace Kent.Entitas
 
         /*
         @brief 創建組件
+        @param id [in] 組件編號
         */
-        IComponent CreateComponent(int componentId, Type type);
+        IComponent CreateComponent(int id, Type type);
 
         /*
         @brief 創建組件
+        @param id [in] 組件編號
         */
-        T CreateComponent<T>(int componentId) where T : IComponent;
+        T CreateComponent<T>(int id) where T : IComponent, new();
     }
 }
