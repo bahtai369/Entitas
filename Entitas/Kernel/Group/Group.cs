@@ -132,9 +132,8 @@ namespace Kent.Entitas
             if (res)
             {
                 entitiesCache = null;
-
-                if (OnEntityRemove != null)
-                    OnEntityRemove(this, entity, id, component);
+                
+                OnEntityRemove?.Invoke(this, entity, id, component);
 
                 entity.RemoveRef(this);
             }
@@ -150,14 +149,9 @@ namespace Kent.Entitas
             if (HasEntity(entity) == false)
                 return;
 
-            if (OnEntityRemove != null)
-                OnEntityRemove(this, entity, id, oldComponent);
-
-            if (OnEntityRemove != null)
-                OnEntityAdd(this, entity, id, newComponent);
-
-            if (OnEntityUpdate != null)
-                OnEntityUpdate(this, entity, id, oldComponent, newComponent);
+            OnEntityRemove?.Invoke(this, entity, id, oldComponent);
+            OnEntityAdd?.Invoke(this, entity, id, newComponent);
+            OnEntityUpdate?.Invoke(this, entity, id, oldComponent, newComponent);
         }
 
         /*

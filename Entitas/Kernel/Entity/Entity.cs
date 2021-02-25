@@ -36,7 +36,7 @@ namespace Kent.Entitas
         /*
         @brief 組件旗標
         */
-        private readonly FlagUtil componentsFlags = new FlagUtil();
+        private readonly FlagsUtil componentsFlags = new FlagsUtil();
 
         /*
         @brief 組件池
@@ -126,8 +126,7 @@ namespace Kent.Entitas
             if (IsEnabled == false)
                 throw new Exception($"can't destroy entity: {this}, entity doesn't enabled");
 
-            if (OnEntityDestroy != null)
-                OnEntityDestroy(this);
+            OnEntityDestroy?.Invoke(this);
         }
 
         /*
@@ -173,8 +172,7 @@ namespace Kent.Entitas
             components[id] = component;
             componentsFlags[id] = true;
 
-            if (OnComponentAdd != null)
-                OnComponentAdd(this, id, component);
+            OnComponentAdd?.Invoke(this, id, component);
         }
 
         /*
@@ -232,24 +230,21 @@ namespace Kent.Entitas
 
                 if (component != null)
                 {
-                    if (OnComponentUpdate != null)
-                        OnComponentUpdate(this, id, old, component);
+                    OnComponentUpdate?.Invoke(this, id, old, component);
                 }
                 else
                 {
                     toStrCache = null;
                     componentsFlags[id] = false;
 
-                    if (OnComponentRemove != null)
-                        OnComponentRemove(this, id, old);
+                    OnComponentRemove?.Invoke(this, id, old);
                 }
 
                 GetComponentsPool(id).Push(old);
             }
             else
             {
-                if (OnComponentUpdate != null)
-                    OnComponentUpdate(this, id, old, component);
+                OnComponentUpdate?.Invoke(this, id, old, component);
             }
         }
 
@@ -404,7 +399,7 @@ namespace Kent.Entitas
 
                 toStrBuilder.Append(GetComponentName(i));
                 toStrBuilder.Append(".");
-                toStrBuilder.Append(GetComponentType(i));
+                toStrBuilder.Append(components[i].GetType());
 
                 // 分割符號
                 if (i < last)
@@ -426,15 +421,6 @@ namespace Kent.Entitas
         private string GetComponentName(int id)
         {
             return debugInfo.ComponentNames[id];
-        }
-
-        /*
-        @brief 取得組件類型
-        @param id [in] 組件編號
-        */
-        private Type GetComponentType(int id)
-        {
-            return debugInfo.ComponentTypes[id];
         }
     }
 }

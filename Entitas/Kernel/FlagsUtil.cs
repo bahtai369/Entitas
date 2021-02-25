@@ -9,7 +9,7 @@ namespace Kent.Entitas
     @brief 旗標工具
     @note 只可容納32個開關(0~31)
     */
-    public class FlagUtil
+    public class FlagsUtil
     {
         /*
         @brief 
@@ -51,7 +51,7 @@ namespace Kent.Entitas
         /*
         @brief 
         */
-        static FlagUtil()
+        static FlagsUtil()
         {
             int temp = 0;
 
@@ -66,7 +66,7 @@ namespace Kent.Entitas
         @brief 
         @note 會複製開關狀態
         */
-        public FlagUtil(FlagUtil src)
+        public FlagsUtil(FlagsUtil src)
         {
             depend = new BitVector32(src.depend);
         }
@@ -75,7 +75,7 @@ namespace Kent.Entitas
         @brief 
         @note 會複製開關狀態
         */
-        public FlagUtil(BitVector32 src)
+        public FlagsUtil(BitVector32 src)
         {
             depend = new BitVector32(src);
         }
@@ -84,7 +84,7 @@ namespace Kent.Entitas
         @brief 
         @param value [in] 用二進位轉十進位方式設定初始開關狀態
         */
-        public FlagUtil(int value = 0)
+        public FlagsUtil(int value = 0)
         {
             depend = new BitVector32(value);
         }

@@ -65,9 +65,9 @@ namespace Kent.Entitas
         void Reset();
 
         /*
-        @brief 將流水號還原成初始值
+        @brief 將實體流水號還原成初始值
         */
-        void ResetSerialId();
+        void ResetEntitySerialId();
 
         /*
         @brief 清除所有委派

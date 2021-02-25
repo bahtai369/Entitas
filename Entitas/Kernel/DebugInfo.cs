@@ -20,18 +20,12 @@ namespace Kent.Entitas
         public readonly string[] ComponentNames;
 
         /*
-        @brief 組件型態
-        */
-        public readonly Type[] ComponentTypes;
-
-        /*
         @brief 
         */
-        public DebugInfo(string mgrName, string[] componentNames, Type[] componentTypes)
+        public DebugInfo(string mgrName, string[] componentNames)
         {
             MgrName = mgrName;
             ComponentNames = componentNames;
-            ComponentTypes = componentTypes;
         }
     }
 }
