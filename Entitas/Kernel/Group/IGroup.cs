@@ -49,6 +49,7 @@ namespace Kent.Entitas
 
         /*
         @brief 處理實體進出群組
+        @note 不會觸發委派
         */
         void HandleEntityMute(T entity);
 
@@ -58,7 +59,8 @@ namespace Kent.Entitas
         void HandleEntity(T entity, int componentId, IComponent component);
 
         /*
-        @brief 更新實體
+        @brief 實體更新
+        @note 限定管理器使用
         */
         void UpdateEntity(T entity, int componentId, IComponent oldComponent, IComponent newComponent);
 
