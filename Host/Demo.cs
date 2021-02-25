@@ -164,7 +164,7 @@ namespace Host
     {
         /*
         @brief 
-        @note 宣告實體創建方法
+        @note 宣告實體創建的方法
         */
         public DemoMgr() : base(() => new DemoEntity(), 32) { }
     }
