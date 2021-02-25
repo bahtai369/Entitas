@@ -77,6 +77,14 @@ namespace Kent.Entitas
         public int RefCount { get { return owners.Count; } }
 
         /*
+        @brief 
+        */
+        public SafeRefCounter(object host)
+        {
+            this.host = host;
+        }
+
+        /*
         @brief 新增參考
         @param owner [in] 對象
         */
