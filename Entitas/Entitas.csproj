@@ -6,10 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Kernel\Entity\" />
     <Folder Include="Kernel\Group\" />
     <Folder Include="Kernel\Matcher\" />
-    <Folder Include="Kernel\Component\" />
     <Folder Include="Kernel\Manager\" />
     <Folder Include="Kernel\System\" />
   </ItemGroup>

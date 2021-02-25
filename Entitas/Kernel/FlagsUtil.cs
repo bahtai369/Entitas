@@ -1,0 +1,149 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Collections.Specialized;
+
+namespace Kent.Entitas
+{
+    /*
+    @brief 旗標工具
+    @note 只可容納32個開關(0~31)
+    */
+    public class FlagsUtil
+    {
+        /*
+        @brief 
+        */
+        private const int MaxSize = 32;
+
+        /*
+        @brief 遮罩
+        @note 用來取單一個bit開關
+        */
+        private static readonly int[] masks = new int[MaxSize];
+
+        /*
+        @brief 
+        */
+        private BitVector32 tool;
+
+        /*
+        @brief 
+        */
+        public int Id { get { return tool.Data; } }
+
+        /*
+        @brief 
+        */
+        public bool this[int idx]
+        {
+            get
+            {
+                return MaxSize > idx ? tool[masks[idx]] : false;
+            }
+            set
+            {
+                if (MaxSize > idx)
+                    tool[masks[idx]] = value;
+            }
+        }
+
+        /*
+        @brief 
+        */
+        static FlagsUtil()
+        {
+            int temp = 0;
+
+            for (int i = 0; i < MaxSize; i++)
+            {
+                masks[i] = BitVector32.CreateMask(temp);
+                temp = masks[i];
+            }
+        }
+
+        /*
+        @brief 
+        @note 會複製開關狀態
+        */
+        public FlagsUtil(FlagsUtil src)
+        {
+            tool = new BitVector32(src.tool);
+        }
+
+        /*
+        @brief 
+        @note 會複製開關狀態
+        */
+        public FlagsUtil(BitVector32 src)
+        {
+            tool = new BitVector32(src);
+        }
+
+        /*
+        @brief 
+        @param value [in] 用二進位轉十進位方式設定初始開關狀態
+        */
+        public FlagsUtil(int value = 0)
+        {
+            tool = new BitVector32(value);
+        }
+
+        /*
+        @brief 清除所有開關
+        @param isOpen [in] 會將所有開關都設定成此狀態
+        */
+        public void Clear(bool isOpen = true)
+        {
+            tool[int.MaxValue] = isOpen;
+        }
+
+        /*
+        @brief 同時取多個開關
+        @param value [in] 用二進位轉十進位方式傳入要取得的開關
+        @return 要所有開關皆為true才會回傳true, 不然就是回傳false
+        */
+        public bool Get(int value)
+        {
+            return tool[value];
+        }
+
+        /*
+        @brief 同時設定多個開關
+        @param value [in] 用二進位轉十進位方式傳入要設定的開關
+        */
+        public void Set(int value, bool isOpen)
+        {
+            tool[value] = isOpen;
+        }
+
+        /*
+        @brief 
+        */
+        public override int GetHashCode()
+        {
+            return Id;
+        }
+
+        /*
+        @brief 
+        */
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+            if (obj.GetType() != GetType())
+                return false;
+
+            return obj.GetHashCode() == GetHashCode();
+        }
+
+        /*
+        @brief 
+        */
+        public override string ToString()
+        {
+            return Id.ToString();
+        }
+    }
+}
