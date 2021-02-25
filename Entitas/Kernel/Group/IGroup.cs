@@ -6,13 +6,15 @@ namespace Kent.Entitas
 {
     /*
     @brief 群組變化
+    @param id [in] 組件編號
     */
-    public delegate void GroupChange<T>(IGroup<T> group, T entity, int componentId, IComponent component) where T : IEntity;
+    public delegate void GroupChange<T>(IGroup<T> group, T entity, int id, IComponent component) where T : IEntity;
 
     /*
     @brief 群組更新
+    @param id [in] 組件編號
     */
-    public delegate void GroupUpdate<T>(IGroup<T> group, T entity, int componentId, IComponent oldComponent, IComponent newComponent) where T : IEntity;
+    public delegate void GroupUpdate<T>(IGroup<T> group, T entity, int id, IComponent oldComponent, IComponent newComponent) where T : IEntity;
 
     /*
     @brief 實體群組
@@ -55,14 +57,16 @@ namespace Kent.Entitas
 
         /*
         @brief 處理實體進出群組
+        @param id [in] 組件編號
         */
-        void HandleEntity(T entity, int componentId, IComponent component);
+        void HandleEntity(T entity, int id, IComponent component);
 
         /*
         @brief 實體更新
         @note 限定管理器使用
+        @param id [in] 組件編號
         */
-        void UpdateEntity(T entity, int componentId, IComponent oldComponent, IComponent newComponent);
+        void UpdateEntity(T entity, int id, IComponent oldComponent, IComponent newComponent);
 
         /*
         @brief 有無此實體

@@ -49,8 +49,9 @@ namespace Kent.Entitas
 
         /*
         @brief 清除單一組件池
+        @param id [in] 組件編號
         */
-        void ClearComponentsPool(int componentId);
+        void ClearComponentsPool(int id);
 
         /*
         @brief 清除所有組件池

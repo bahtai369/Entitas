@@ -101,28 +101,31 @@ namespace Kent.Entitas
 
         /*
         @brief 處理實體進出群組
+        @param id [in] 組件編號
         */
-        public void HandleEntity(T entity, int componentId, IComponent component)
+        public void HandleEntity(T entity, int id, IComponent component)
         {
             if (Matcher.IsEntityMatch(entity))
-                AddEntity(entity, componentId, component);
+                AddEntity(entity, id, component);
             else
-                RemoveEntity(entity, componentId, component);
+                RemoveEntity(entity, id, component);
         }
 
         /*
         @brief 新增實體
+        @param id [in] 組件編號
         */
-        private void AddEntity(T entity, int componentId, IComponent component)
+        private void AddEntity(T entity, int id, IComponent component)
         {
             if (AddEntityMute(entity) && OnEntityAdd != null)
-                OnEntityAdd(this, entity, componentId, component);
+                OnEntityAdd(this, entity, id, component);
         }
 
         /*
         @brief 移除實體
+        @param id [in] 組件編號
         */
-        private void RemoveEntity(T entity, int componentId, IComponent component)
+        private void RemoveEntity(T entity, int id, IComponent component)
         {
             var res = entities.Remove(entity);
 
@@ -131,7 +134,7 @@ namespace Kent.Entitas
                 entitiesCache = null;
 
                 if (OnEntityRemove != null)
-                    OnEntityRemove(this, entity, componentId, component);
+                    OnEntityRemove(this, entity, id, component);
 
                 entity.RemoveRef(this);
             }
@@ -139,21 +142,22 @@ namespace Kent.Entitas
 
         /*
         @brief 實體更新
+        @param id [in] 組件編號
         @note 限定管理器使用
         */
-        public void UpdateEntity(T entity, int componentId, IComponent oldComponent, IComponent newComponent)
+        public void UpdateEntity(T entity, int id, IComponent oldComponent, IComponent newComponent)
         {
             if (HasEntity(entity) == false)
                 return;
 
             if (OnEntityRemove != null)
-                OnEntityRemove(this, entity, componentId, oldComponent);
+                OnEntityRemove(this, entity, id, oldComponent);
 
             if (OnEntityRemove != null)
-                OnEntityAdd(this, entity, componentId, newComponent);
+                OnEntityAdd(this, entity, id, newComponent);
 
             if (OnEntityUpdate != null)
-                OnEntityUpdate(this, entity, componentId, oldComponent, newComponent);
+                OnEntityUpdate(this, entity, id, oldComponent, newComponent);
         }
 
         /*
