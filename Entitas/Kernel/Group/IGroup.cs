@@ -8,7 +8,7 @@ namespace Kent.Entitas
     @brief 群組變化
     @param id [in] 組件編號
     */
-    public delegate void GroupChange<T>(IGroup<T> group, T entity, int id, IComponent component) where T : IEntity;
+    public delegate void GroupChange<T>(IGroup<T> group, T entity) where T : IEntity;
 
     /*
     @brief 群組更新

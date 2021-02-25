@@ -55,7 +55,7 @@ namespace Kent.Entitas
             }
             else
             {
-                debugInfo = CreateDefaultDebugInfo();
+                this.debugInfo = CreateDefaultDebugInfo();
             }
 
             //

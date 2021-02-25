@@ -34,6 +34,7 @@ namespace Kent.Entitas
 
         /*
         @brief 
+        @param idx [in] 0~31
         */
         public bool this[int idx]
         {

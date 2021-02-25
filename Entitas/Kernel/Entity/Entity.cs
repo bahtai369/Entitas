@@ -378,7 +378,7 @@ namespace Kent.Entitas
         */
         public override string ToString()
         {
-            if (toStrCache != null)
+            if (toStrCache != string.Empty)
                 return toStrCache;
 
             if (toStrBuilder == null)
@@ -389,7 +389,7 @@ namespace Kent.Entitas
             // 開頭
             toStrBuilder.Append("entity_").Append(SerialId).Append("(");
 
-            var last = maxComponents - 1;
+            bool isHead = true;
 
             // 內容
             for (int i = 0; i < maxComponents; i++)
@@ -397,13 +397,16 @@ namespace Kent.Entitas
                 if (components[i] == null)
                     continue;
 
+                // 分割符號
+                if (isHead == false)                    
+                    toStrBuilder.Append(", ");
+
+                if (isHead)
+                    isHead = false;
+
                 toStrBuilder.Append(GetComponentName(i));
                 toStrBuilder.Append(".");
                 toStrBuilder.Append(components[i].GetType());
-
-                // 分割符號
-                if (i < last)
-                    toStrBuilder.Append(", ");
             }
 
             // 結尾

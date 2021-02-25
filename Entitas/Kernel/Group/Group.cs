@@ -118,7 +118,7 @@ namespace Kent.Entitas
         private void AddEntity(T entity, int id, IComponent component)
         {
             if (AddEntityMute(entity) && OnEntityAdd != null)
-                OnEntityAdd(this, entity, id, component);
+                OnEntityAdd(this, entity);
         }
 
         /*
@@ -133,7 +133,7 @@ namespace Kent.Entitas
             {
                 entitiesCache = null;
                 
-                OnEntityRemove?.Invoke(this, entity, id, component);
+                OnEntityRemove?.Invoke(this, entity);
 
                 entity.RemoveRef(this);
             }
@@ -149,8 +149,8 @@ namespace Kent.Entitas
             if (HasEntity(entity) == false)
                 return;
 
-            OnEntityRemove?.Invoke(this, entity, id, oldComponent);
-            OnEntityAdd?.Invoke(this, entity, id, newComponent);
+            OnEntityRemove?.Invoke(this, entity);
+            OnEntityAdd?.Invoke(this, entity);
             OnEntityUpdate?.Invoke(this, entity, id, oldComponent, newComponent);
         }
 

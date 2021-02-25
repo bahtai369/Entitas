@@ -53,14 +53,31 @@ namespace Host
         private DemoMgr mgr;
 
         /*
-        @brief 組件a
+        @brief 群組
         */
-        private ComponentA componentA;
+        private IGroup<DemoEntity> group;
 
         /*
-        @brief 組件b
+        @brief 組件a
         */
-        private ComponentB componentB;
+        private ComponentA component;
+
+        /*
+        @brief 處理群組相關
+        */
+        private void HandleGroup()
+        {
+            // 設定此系統關心那些組件
+            var flags = new FlagsUtil();
+            flags[ComponentA.Id] = true;
+            flags[ComponentB.Id] = true;
+
+            // 用組件混和編號取配對器
+            var matcher = Matcher<DemoEntity>.GetAllMatcher(flags.Id);
+
+            // 用配對器取群組
+            group = mgr.GetGroup(matcher);
+        }
 
         /*
         @brief 設定管理器
@@ -77,57 +94,66 @@ namespace Host
         {
             Console.WriteLine("entitas demo start");
 
-            // 
-            var flags = new FlagsUtil();
-            flags[ComponentA.Id] = true;
-            flags[ComponentB.Id] = true;
+            // 處理群組相關
+            HandleGroup();
 
-            // 取得關心的群組 
-            var matcher = Matcher<DemoEntity>.GetAllMatcher(flags.Id);
-            var group = mgr.GetGroup(matcher);
-
-            // 當群組實體新增
-            group.OnEntityAdd += (IGroup<DemoEntity> temp_group, DemoEntity temp_entity, int id, IComponent component) =>
-            {
-                Console.WriteLine($"demo entity: {id} add to group");
-            };
-
-            // 當群組實體移除
-            group.OnEntityRemove += (IGroup<DemoEntity> temp_group, DemoEntity temp_entity, int id, IComponent component) =>
-            {
-                Console.WriteLine($"demo entity: {id} remove from group");
-            };
+            // 設定群組的委派
+            group.OnEntityAdd += OnEntityAddHandler;
+            group.OnEntityRemove += OnEntityRemoveHandler;
 
             // 新增實體並增加組件
             var entity = mgr.CreateEntity();
-            componentA = entity.CreateComponent<ComponentA>(ComponentA.Id);
-            componentB = entity.CreateComponent<ComponentB>(ComponentB.Id);
+            entity.CreateComponent<ComponentB>(ComponentB.Id);
 
-            // 移除實體
+            // 增加組件, 做完後會觸發加入群組
+            entity.CreateComponent<ComponentA>(ComponentA.Id);            
+
+            // 移除組件, 做完後會觸發退出群組
             entity.RemoveComponent(ComponentB.Id);
-            componentB = null;
 
-            // 
+            // 設定組件的訊息
             SetMsg("entitas demo end");
 
-            //
+            // 顯示組件的訊息
             ShowMsg();
         }
 
         /*
-        @brief 設定訊息
+        @brief 設定組件的訊息
         */
-        public void SetMsg(string msg)
+        private void SetMsg(string msg)
         {
-            componentA.Msg = msg;
+            if (msg != string.Empty)
+                component.Msg = msg;
         }
 
         /*
-        @brief 顯示訊息
+        @brief 顯示組件的訊息
         */
-        public void ShowMsg()
+        private void ShowMsg()
         {
-            Console.WriteLine(componentA.Msg);
+            if (component.Msg != string.Empty)
+                Console.WriteLine(component.Msg);
+        }
+
+        /*
+        @brief 當實體加入到群組中
+        */
+        private void OnEntityAddHandler(IGroup<DemoEntity> group, DemoEntity entity)
+        {
+            component = (ComponentA)entity.GetComponent(ComponentA.Id);
+
+            Console.WriteLine($"demo entity: {entity} add to group");                       
+        }
+
+        /*
+        @brief 當實體從群組中移除
+        */
+        private void OnEntityRemoveHandler(IGroup<DemoEntity> group, DemoEntity entity)
+        {
+            component = null;
+
+            Console.WriteLine($"demo entity: {entity} remove from group");
         }
     }
 
