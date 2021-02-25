@@ -5,8 +5,4 @@
     <RootNamespace>Kent.Entitas</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Kernel\System\" />
-  </ItemGroup>
-
 </Project>

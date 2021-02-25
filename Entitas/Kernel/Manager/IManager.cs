@@ -7,12 +7,12 @@ namespace Kent.Entitas
     /*
     @brief 管理器實體變化
     */
-    public delegate void ManagerEntityChange(IManager manager, IEntity entity);
+    public delegate void MgrEntityChange(IManager mgr, IEntity entity);
 
     /*
     @brief 管理器群組變化
     */
-    public delegate void ManagerGroupChange(IManager manager, IGroup group);
+    public delegate void MgrGroupChange(IManager mgr, IGroup group);
     
     /*
     @brief 管理器
@@ -22,10 +22,10 @@ namespace Kent.Entitas
         /*
         @brief 各種委派
         */
-        event ManagerEntityChange OnEntityCreate;        // 新創或復用實體
-        event ManagerEntityChange OnEntityReadyDestroy;  // 實體準備好銷毀
-        event ManagerEntityChange OnEntityDestroy;       // 銷毀實體
-        event ManagerGroupChange OnGroupCreate;          // 創建群組 
+        event MgrEntityChange OnEntityCreate;        // 新創或復用實體
+        event MgrEntityChange OnEntityReadyDestroy;  // 實體準備好銷毀
+        event MgrEntityChange OnEntityDestroy;       // 銷毀實體
+        event MgrGroupChange OnGroupCreate;          // 創建群組 
 
         /*
         @brief 使用中實體總數
