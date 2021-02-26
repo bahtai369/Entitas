@@ -68,9 +68,7 @@ namespace Host
         private void HandleGroup()
         {
             // 設定此系統關心那些組件
-            var flags = new FlagsUtil();
-            flags[ComponentA.Id] = true;
-            flags[ComponentB.Id] = true;
+            var flags = new FlagsUtil(ComponentA.Id, ComponentB.Id);
 
             // 用組件混和編號取配對器
             var matcher = Matcher<DemoEntity>.GetAllMatcher(flags.Id);
@@ -116,6 +114,9 @@ namespace Host
 
             // 顯示組件的訊息
             ShowMsg();
+
+            // 銷毀所有實體
+            mgr.DestroyAllEntities();
         }
 
         /*

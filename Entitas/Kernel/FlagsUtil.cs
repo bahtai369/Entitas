@@ -34,7 +34,7 @@ namespace Kent.Entitas
 
         /*
         @brief 
-        @param idx [in] 0~31
+        @param idx [in] 開關索引0~31
         */
         public bool this[int idx]
         {
@@ -65,6 +65,14 @@ namespace Kent.Entitas
 
         /*
         @brief 
+        */
+        public FlagsUtil()
+        {
+            depend = new BitVector32();
+        }
+
+        /*
+        @brief 
         @note 會複製開關狀態
         */
         public FlagsUtil(FlagsUtil src)
@@ -79,16 +87,17 @@ namespace Kent.Entitas
         public FlagsUtil(BitVector32 src)
         {
             depend = new BitVector32(src);
-        }
+        }        
 
         /*
         @brief 
-        @param value [in] 用二進位轉十進位方式設定初始開關狀態
+        @param indices [in] 開關索引 
+        @note 可一次設定多個開關索引 
         */
-        public FlagsUtil(int value = 0)
+        public FlagsUtil(params int[] indices)
         {
-            depend = new BitVector32(value);
-        }
+            depend = new BitVector32(MergeIndices(indices));
+        }        
 
         /*
         @brief 清除所有開關
@@ -101,12 +110,12 @@ namespace Kent.Entitas
 
         /*
         @brief 同時取多個開關
-        @param value [in] 用二進位轉十進位方式傳入要取得的開關
-        @return 要所有開關皆為true才會回傳true, 不然就是回傳false
+        @param indices [in] 開關索引 
+        @return 要全部都開才會回傳true, 不然就是回傳false
         */
-        public bool Get(int value)
+        public bool Get(params int[] indices)
         {
-            return depend[value];
+            return depend[MergeIndices(indices)];
         }
 
         /*
@@ -116,6 +125,33 @@ namespace Kent.Entitas
         public void Set(int value, bool isOpen)
         {
             depend[value] = isOpen;
+        }
+
+        /*
+        @brief 同時設定多個開關
+        @param indices [in] 開關索引 
+        */
+        public void Set(bool isOpen, params int[] indices)
+        {
+            depend[MergeIndices(indices)] = isOpen;
+        }
+
+        /*
+        @brief 合併多個開關索引
+        */
+        private int MergeIndices(params int[] indices)
+        {
+            int res = 0;
+
+            foreach (var idx in indices)
+            {
+                if (idx >= MaxSize)
+                    continue;
+
+                res |= masks[idx];
+            }
+
+            return res;
         }
 
         /*
